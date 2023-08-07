@@ -1,0 +1,13 @@
+mod {
+    use std.math;
+
+    pub def Fixed = struct {
+        item value: Int32;
+        item fraction_digits: Int32;
+
+        pub def new: (Int32, Int32) -> Fixed = (whole, fraction) -> mod {
+            def fraction_digits = math.digits (fraction);
+            def value = whole * math.pow (10, fraction_digits) + fraction
+        };
+    };
+}

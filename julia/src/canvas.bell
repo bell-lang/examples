@@ -11,7 +11,7 @@ mod {
         
         item color: (Fixed, Fixed) -> Block;
 
-        def draw: () -> () \ PlaceBlock = () |-> region {
+        def draw: () -> () \ PlaceBlock = () |-> {
             for x in initial.0.end.0 {
                 for z in initial.1.end.1 {
                     break {

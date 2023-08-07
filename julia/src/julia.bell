@@ -8,10 +8,10 @@ mod {
         item c: Complex;
         item iterations: Int32;
 
-        def escape_iteration = z: Complex |-> region {
-            mut z = z;
+        def escape_iteration = z: Complex |-> {
+            mut def z = z;
 
-            for iteration in 0..iterations {
+            for iteration in 0..iterations do {
                 if math.abs(z) > 2.0 then break iteration;
                 z = math.square(z) + c;
             }
