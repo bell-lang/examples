@@ -1,0 +1,14 @@
+[project]
+name = "julia"
+version = "0.1.0"
+description = "Julia set renderer"
+authors = [{ name = "Yoav Grimland", email = "mailbox@miestro.de" }]
+license = "GPLv3"
+
+# Information about the Bell toolchain to use.
+# You can just specify the toolchain version number,
+# or specify alongside that specific component versions
+toolchain = "1.12.7"
+
+# Enter your dependencies here:
+[dependencies]
