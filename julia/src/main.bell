@@ -11,3 +11,4 @@ mod {
         color: julia_set.color
     }.draw ();
 }
+
