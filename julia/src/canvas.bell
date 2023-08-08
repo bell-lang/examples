@@ -1,5 +1,5 @@
 mod {
-    use std.math;
+    use math;
     use std.game.Pos;
     use std.game.blocks.PlaceBlock;
     use std.game.blocks.Block;
@@ -12,12 +12,18 @@ mod {
         color: (Fixed, Fixed) -> Block;
 
         pub def draw: () -> () \ PlaceBlock = () => {
-            for x in initial.0.end.0 {
-                for z in initial.1.end.1 {
+            def interpolate = (value, start, end) => math.interpolate mod {
+                def t = Fixed.new (value - start, 0) / Fixed.new (end - start, 0);
+                def initial = Fixed.new(-2, 0);
+                def end = Fixed.new(2, 0);
+            };
+
+            for x in initial.0..end.0 {
+                for z in initial.1..end.1 {
                     break {
                         block: color (
-                            math.interpolate mod { def value = x; def between = (initial.0, end.0); },
-                            math.interpolate mod { def value = x; def between = (initial.1, end.1); }
+                            interpolate (x, initial.0, end.0),
+                            interpolate (z, initial.1, end.1),
                         ),
                         pos: Pos.new (x, height, z)
                     };

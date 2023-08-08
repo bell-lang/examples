@@ -1,4 +1,6 @@
 mod {
+    use fixed.Fixed;
+
     pub def digits: Int32 -> UInt32 =
         mut number =>
             if number == 0 then
@@ -32,4 +34,17 @@ mod {
         item max: Int32;
         item range: Int32;
     } -> Int32 = module => (module.value - module.min) * (module.range - 1) / module.max;
+
+    pub def interpolate: struct {
+        item t: Fixed;
+        item initial: Fixed;
+        item end: Fixed;
+    } -> Fixed = module =>
+        Fixed.add (
+            Fixed.multiply (module.initial, Fixed.subtract (
+                Fixed.new (1, 0),
+                module.t)
+            ),
+            Fixed.multiply (module.t, module.end)
+        );
 }
