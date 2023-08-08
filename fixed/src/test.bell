@@ -1,11 +1,6 @@
-mod {
-    use root.impls.DisplayFixed;
+{
     use root.Fixed;
     use std.io.Write;
 
-    // This could be the standard way to attach functionality in Bell.
-    def Fixed = Fixed + DisplayFixed;
-
-    pub def testy: () -> () \ Write =
-        () -> Fixed.display (Fixed.new (1, 234));
+    pub def test_1: () -> () \ Write = () => Fixed.display (Fixed.add (Fixed.new (1, 234), Fixed.new(3, 3)));
 }

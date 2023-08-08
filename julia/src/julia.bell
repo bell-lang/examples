@@ -1,17 +1,17 @@
-mod {
+{
     use std.fn.id;
     use std.math;
     use math.Complex;
     use std.game.Block.blocks;
 
-    pub def JuliaSet = struct {
+    pub JuliaSet = struct {
         item c: Complex;
         item iterations: Int32;
 
-        def escape_iteration = z: Complex |-> {
+        escape_iteration = z: Complex |-> reg {
             mut def z = z;
 
-            for iteration in 0..iterations do {
+            for iteration in 0..iterations do reg {
                 if math.abs(z) > 2.0 then break iteration;
                 z = math.square(z) + c;
             }
@@ -19,8 +19,7 @@ mod {
             break iterations;
         } with id;
 
-        // FIXME: This is really bad, and should be reworked
-        def color = z: (Fixed, Fixed) |-> match escape_iteration (Complex.from z) {
+        color = z: (Fixed, Fixed) => match math.quantize {def value = escape_iteration (Complex.from z), def range = 11 } {
             0 -> blocks.RED_CONCRETE,
             1 -> blocks.ORANGE_CONCRETE,
             2 -> blocks.YELLOW_CONCRETE,

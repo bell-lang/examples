@@ -1,13 +1,33 @@
-mod {
+{
+    use root.impls.DisplayFixed;
     use std.math;
 
     pub def Fixed = struct {
         item value: Int32;
         item fraction_digits: Int32;
 
-        pub def new: (Int32, Int32) -> Fixed = (whole, fraction) -> mod {
+        pub def new: (Int32, Int32) -> Fixed = (whole, fraction) => {
             def fraction_digits = math.digits (fraction);
-            def value = whole * math.pow (10, fraction_digits) + fraction
+            def value = whole * math.pow (10, fraction_digits) + fraction;
+        };
+
+        pub def apply = { item op: (Int32, Int32) -> Int32, item lhs: Fixed, item rhs: Fixed } => {
+            def fraction_digits = math.max (a.fraction_digits, b.fraction_digits);
+            def scale = fixed => fraction_digits / fixed.fraction_digits;
+            def value = op(a.value * scale a, b.value * scale b.fraction_digits);
+        };
+
+        pub def add = apply {op: (_ + _), lhs: _, rhs: _};
+        pub def subtract = apply {op: (_ - _), lhs: _, rhs: _};
+        pub def multiply = apply {op: (_ * _), lhs: _, rhs: _};
+        pub def divide = apply {op: (_ / _), lhs: _, rhs: _};
+
+        pub def display: Fixed -> String = fixed => reg {
+            def whole = fixed.value / math.pow (10, fixed.fraction_digits);
+            def fraction = fixed.value - whole * math.pow (10, fixed.fraction_digits);
+
+            // Bell will have String interpolation, but it is unused here on purpose
+            Int32.display whole + "." + Int32.display fraction
         };
     };
 }

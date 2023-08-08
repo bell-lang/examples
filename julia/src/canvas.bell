@@ -1,23 +1,23 @@
-mod {
-    use std.math.interpolate;
+{
+    use std.math;
     use std.game.Pos;
-    use std.game.Block;
-    use Block.PlaceBlock;
+    use std.game.blocks.PlaceBlock;
+    use std.game.blocks.Block;
 
-    pub def Canvas = struct {
-        item initial: (Int32, Int32);
-        item end: (Int32, Int32);
-        item height: Int32;
+    pub Canvas = struct {
+        initial: (Int32, Int32);
+        end: (Int32, Int32);
+        height: Int32;
         
-        item color: (Fixed, Fixed) -> Block;
+        color: (Fixed, Fixed) -> Block;
 
-        def draw: () -> () \ PlaceBlock = () |-> {
+        draw: () -> () \ PlaceBlock = () => reg {
             for x in initial.0.end.0 {
                 for z in initial.1.end.1 {
                     break {
                         block: color (
-                            interpolate { value: x, between: (initial.0, end.0) },
-                            interpolate { value: x, between: (initial.1, end.1) }
+                            math.interpolate { value: x, between: (initial.0, end.0) },
+                            math.interpolate { value: x, between: (initial.1, end.1) }
                         ),
                         pos: Pos (x, height, z)
                     };
