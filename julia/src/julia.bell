@@ -1,37 +1,43 @@
-{
-    use std.fn.id;
-    use std.math;
-    use math.Complex;
+mod {
+    use math;
+    use complex.Complex;
     use std.game.Block.blocks;
 
-    pub JuliaSet = struct {
+    pub def JuliaSet = struct {
         item c: Complex;
         item iterations: Int32;
 
-        escape_iteration = z: Complex |-> reg {
+        def escape_iteration = z: Complex => {
             mut def z = z;
 
-            for iteration in 0..iterations do reg {
-                if math.abs(z) > 2.0 then break iteration;
-                z = math.square(z) + c;
+            for iteration in 0..iterations {
+                if Complex.abs_squared z > 4.0 then break iteration;
+                z = Complex.add (Complex.square z, c);
             }
 
             break iterations;
-        } with id;
+        } with (x => x);
 
-        color = z: (Fixed, Fixed) => match math.quantize {def value = escape_iteration (Complex.from z), def range = 11 } {
-            0 -> blocks.RED_CONCRETE,
-            1 -> blocks.ORANGE_CONCRETE,
-            2 -> blocks.YELLOW_CONCRETE,
-            3 -> blocks.LIME_CONCRETE,
-            4 -> blocks.GREEN_CONCRETE,
-            5 -> blocks.CYAN_CONCRETE,
-            6 -> blocks.LIGHT_BLUE_CONCRETE,
-            7 -> blocks.BLUE_CONCRETE,
-            8 -> blocks.PURPLE_CONCRETE,
-            9 -> blocks.GRAY_CONCRETE,
-            _ -> blocks.BLACK_CONCRETE,
+        pub def color = z: (Fixed, Fixed) => {
+            def quantized_iterations = math.quantize mod {
+                def value = escape_iteration (Complex.from z);
+                def min = 0;
+                def max = iterations;
+                def range = 11;
+            };
+            
+            if quantized_iterations is
+                0 then blocks.RED_CONCRETE
+                1 then blocks.ORANGE_CONCRETE,
+                2 then blocks.YELLOW_CONCRETE,
+                3 then blocks.LIME_CONCRETE,
+                4 then blocks.GREEN_CONCRETE,
+                5 then blocks.CYAN_CONCRETE,
+                6 then blocks.LIGHT_BLUE_CONCRETE,
+                7 then blocks.BLUE_CONCRETE,
+                8 then blocks.PURPLE_CONCRETE,
+                9 then blocks.GRAY_CONCRETE,
+                _ then blocks.BLACK_CONCRETE
         };
     };
 }
-

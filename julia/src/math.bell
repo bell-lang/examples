@@ -1,0 +1,35 @@
+mod {
+    pub def digits: Int32 -> UInt32 =
+        mut number =>
+            if number == 0 then
+                1
+            else {
+                mut def digits = 0;
+
+                while number != 0 {
+                    digits += 1;
+                    number /= 10;
+                }
+
+                digits
+            };
+
+    pub def pow: (Int32, Int32) -> Int32 = (base, exponent) => {
+        mut def result = 1;
+        
+        for _ in 0..exponent {
+            result *= base;
+        }
+
+        result
+    };
+
+    pub def max: (Int32, Int32) -> Int32 = (a, b) => if a > b then a else b;
+
+    pub def quantize: struct {
+        item value: Int32;
+        item min: Int32;
+        item max: Int32;
+        item range: Int32;
+    } -> Int32 = module => (module.value - module.min) * (module.range - 1) / module.max;
+}

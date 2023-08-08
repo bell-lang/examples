@@ -1,7 +1,7 @@
 [project]
 name = "julia"
-version = "0.1.0"
-description = "Julia set renderer"
+version = "0.2.0"
+description = "Quadratic Julia set renderer"
 authors = [{ name = "Yoav Grimland", email = "mailbox@miestro.de" }]
 license = "GPLv3"
 

@@ -1,0 +1,25 @@
+mod {
+    use fixed.Fixed;
+
+    pub def Complex = struct {
+        item real: Fixed;
+        item imaginary: Fixed;
+
+        pub def new: (Fixed, Fixed) -> Complex = (real, imaginary) => mod {
+            def real = real;
+            def imaginary = imaginary;
+        };
+
+        pub def abs_squared: Complex -> Fixed = z => Fixed.add (Fixed.square z.real, Fixed.square z.imaginary);
+        
+        pub def square: Complex -> Complex = z => mod {
+            def real = abs_squared z;
+            def imaginary = Fixed.multiply (Fixed.new (2, 0), Fixed.multiply (z.real, z.imaginary));
+        };
+
+        pub def add: (Complex, Complex) -> Complex = (a, b) => mod {
+            def real = Fixed.add (a.real, b.real);
+            def imaginary = Fixed.add (a.imaginary, b.imaginary);
+        };
+    }
+}

@@ -1,0 +1,24 @@
+mod {
+    use math;
+
+    pub def Fixed = struct {
+        item value: Int32;
+        item fraction_digits: Int32;
+
+        pub def new: (Int32, Int32) -> Fixed = (whole, fraction) => mod {
+            def fraction_digits = math.digits (fraction);
+            def value = whole * math.pow (10, fraction_digits) + fraction;
+        };
+
+        pub def gen_op = op: (Int32, Int32) -> Int32 => ((a, b) => mod {
+            def fraction_digits = math.max (a.fraction_digits, b.fraction_digits);
+            def scale = fixed => fraction_digits / fixed.fraction_digits;
+            def value = op (a.value * scale a, b.value * scale b.fraction_digits);
+        });
+
+        pub def add = gen_op (_ + _);
+        pub def multiply = gen_op (_ * _);
+        
+        pub def square = number => multiply (number, number);
+    };
+}

@@ -1,14 +1,20 @@
-{
+mod {
     use std.game.blocks.PlaceBlock;
+    
+    use complex.Complex;
+    use fixed.Fixed;
     use canvas.Canvas;
+    use julia.JuliaSet;
 
-    julia_set = JuliaSet { c: 0.5 + 0.5i, iterations: 10 };
+    def julia_set: JuliaSet = mod {
+        def c = Complex.new (Fixed.new(0, 5), Fixed.new(0, 5));
+        def iterations = 10;
+    };
 
-    pub main: () -> () \ PlaceBlock = Canvas {
-        initial: (0, 0),
-        end: (200, 100),
-        height: 0,
-        color: julia_set.color
-    }.draw ();
+    pub def main: () -> () \ PlaceBlock = (mod {
+        def initial = (0, 0);
+        def height = 0;
+        def end = (200, 100);
+        def color = julia_set.color;
+    }: Canvas).draw ();
 }
-

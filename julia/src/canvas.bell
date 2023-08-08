@@ -1,29 +1,28 @@
-{
+mod {
     use std.math;
     use std.game.Pos;
     use std.game.blocks.PlaceBlock;
     use std.game.blocks.Block;
 
-    pub Canvas = struct {
+    pub def Canvas = struct {
         initial: (Int32, Int32);
         end: (Int32, Int32);
         height: Int32;
         
         color: (Fixed, Fixed) -> Block;
 
-        draw: () -> () \ PlaceBlock = () => reg {
+        pub def draw: () -> () \ PlaceBlock = () => {
             for x in initial.0.end.0 {
                 for z in initial.1.end.1 {
                     break {
                         block: color (
-                            math.interpolate { value: x, between: (initial.0, end.0) },
-                            math.interpolate { value: x, between: (initial.1, end.1) }
+                            math.interpolate mod { def value = x; def between = (initial.0, end.0); },
+                            math.interpolate mod { def value = x; def between = (initial.1, end.1); }
                         ),
-                        pos: Pos (x, height, z)
+                        pos: Pos.new (x, height, z)
                     };
                 }
             }
         };
     };
 }
-
