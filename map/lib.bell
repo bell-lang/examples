@@ -1,0 +1,17 @@
+{
+    use option.Option,
+
+    Eq = {
+        t: *,
+        eq: t -> t -> Bool
+    },
+
+    Map = {
+        key: *,
+        map: * -> *,
+
+        empty: map a,
+        add: key -> a -> map a -> map a,
+        lookup: -> key -> map a -> Option a
+    }
+}

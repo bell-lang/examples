@@ -1,0 +1,17 @@
+{
+    Functor f: * -> * = {
+        map: (a -> b, f a) -> f b,
+    },
+
+    pub Option: Functor = a => {
+        data: #None + #Some a,
+
+        pub None: Self = { data: #None },
+        pub Some: Self = { data: #Some _ },
+    
+        pub map = (f: a -> b, option: Option a) => when option.data {
+            #Some data -> Some (f data),
+            #None -> None
+        }
+    },
+}
